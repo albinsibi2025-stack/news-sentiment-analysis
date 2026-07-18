@@ -1,15 +1,9 @@
 import streamlit as st
 import pandas as pd
-import psycopg2
+from database import get_connection
 
 # Database connection
-conn = psycopg2.connect(
-    host="host.docker.internal",
-    port="5432",
-    database="newsdb",
-    user="postgres",
-    password="root"
-)
+conn = get_connection()
 
 # Read data
 query = "SELECT * FROM news;"
@@ -32,5 +26,6 @@ st.write("Neutral:", len(df[df["sentiment_label"] == "Neutral"]))
 st.subheader("Sentiment Distribution")
 
 sentiment_counts = df["sentiment_label"].value_counts()
-
 st.bar_chart(sentiment_counts)
+
+conn.close()

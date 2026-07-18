@@ -6,7 +6,7 @@ load_dotenv()
 
 API_KEY = os.getenv("NEWS_API_KEY")
 
-URL = "https://newsapi.org/v2/top-headlines"
+url = f"https://newsapi.org/v2/top-headlines?country=us&apiKey={API_KEY}"
 
 
 def get_news(country="us"):

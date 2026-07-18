@@ -9,3 +9,17 @@ def get_connection():
         user=os.getenv("DB_USER", "postgres"),
         password=os.getenv("DB_PASSWORD", "root")
     )
+
+def insert_news(title, description, source, published_at, label, score):
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        INSERT INTO news
+        (title, description, source, published_at, sentiment_label, sentiment_score)
+        VALUES (%s, %s, %s, %s, %s, %s)
+    """, (title, description, source, published_at, label, score))
+
+    conn.commit()
+    cur.close()
+    conn.close()
